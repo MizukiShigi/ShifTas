@@ -1,0 +1,79 @@
+<form method="POST" class="d-inline">
+    {% csrf_token %}
+<div class="table-responsive">
+    <table class="table">
+        
+    <tbody>
+    <tr>
+        <th scope="col">名前</th>
+        <td>{{staff.name}}</td>
+    </tr>
+    <tr>
+        <th scope="col">スタッフ番号</th>
+        <td>{{staff.staff_no}}</td>
+    </tr>
+    <tr>
+        <th scope="col">カウンター</th>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="counter"
+                {% if staff.counter_flg %} checked {% endif %}
+                {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">フライヤー</th>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="flyer"  
+                {% if staff.flyer_flg %} checked {% endif %}
+                {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">キッチン</th>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="kitchen" 
+                {% if staff.kitchen_flg %} checked {% endif %}
+                {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">時間帯責任者</th>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="resposible" 
+                {% if staff.responsible_flg %} checked {% endif %}
+                {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">オープン</th>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="opener" 
+                {% if staff.opener_flg %} checked {% endif %}
+                {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <th scope="col">新人</th>
+        <td>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="rookie" 
+                {% if staff.rookie_flg %} checked {% endif %}
+                {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</form>
+</div>

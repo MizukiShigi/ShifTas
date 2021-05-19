@@ -1,0 +1,70 @@
+{% extends 'snipets/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-12">
+        <h3 class="font-italic text-success mx-2 my-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+            シフト提出
+        </h3>
+        <div class="nav d-flex justify-content-between">
+            <form method="GET" class="d-inline">
+            <div class="nav d-flex flex-row">
+                <h5 class="text-secondary mx-2 mt-2">{{year}}年</h5>
+                <div class="mx-2">
+                    <select class="text-secondary form-select " aria-label=".form-select-lg example" name="month" onchange="this.form.submit()">
+                        <option selected value="{{month}}">{{month}}月</option>
+                        <option value="1">1月</option>
+                        <option value="2">2月</option>
+                        <option value="3">3月</option>
+                        <option value="4">4月</option>
+                        <option value="5">5月</option>
+                        <option value="6">6月</option>
+                        <option value="7">7月</option>
+                        <option value="8">8月</option>
+                        <option value="9">9月</option>
+                        <option value="10">10月</option>
+                        <option value="11">11月</option>
+                        <option value="12">12月</option>
+                    </select>
+                </div>
+            </div>
+            </form>
+            {% include 'shifts/shift_request.html' %}
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered ">
+            <thead>
+            <tr>
+                <th class="text-center" scope="col" style="position: sticky; left: 0; background-color: #ffff;">名前</th>
+                {% for day, value in days.items %}
+                    <th scope="col" {% if value.holiday_flg == True or day == 28 %} class="text-danger" {% endif %}>
+                        {{month}}/{{day}} ({{value.day_of_week}})
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+                {% for staff in staffs%}
+                    <tr>
+                        <th style="position: sticky; left: 0; background-color: #ffff;">{{staff.name}}</th>
+                        {% for i in range %}
+                            {% for shift in shifts %}
+                            
+                                {% if staff.staff == shift.staff_id and shift.day == i %}
+                                    <td class="text-center" style="font-size: 10px;">{% if shift.absence_flg %} x {% else %}{{shift.fromtime | date:"G"}}-{{shift.totime | date:"G"}}{% endif %}</td>
+                                {% endif %}
+                            
+                            {% endfor %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
