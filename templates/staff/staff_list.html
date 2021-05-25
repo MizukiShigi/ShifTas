@@ -28,7 +28,7 @@
             {% if staffs %}
                 {% for staff in staffs%}
                 <tr>
-                    <td><a href="{% url 'staff_detail' staff.pk%}">{{staff.name}}</a></td>
+                    <td><a href="{% url 'staff_detail' staff.pk%}">{{staff.staff_name}}</a></td>
                 </tr>
                 {% endfor %}
             {% else %}

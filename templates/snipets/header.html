@@ -8,10 +8,10 @@
     </header>
     <div class="py-1 mb-4">
         <nav class="nav flex-row-reverse bd-highlight bg-light">
-            <a class="px-1 link-success fw-bold" href="#">ログアウト</a>
+            <a class="px-1 link-success fw-bold" href="{% url 'logout' %}">ログアウト</a>
             <a class="px-1 link-success fw-bold" href="{% url 'staff_list' %}">スタッフ一覧</a>
             <a class="px-1 link-success fw-bold" href="{% url 'submit_shifts' %}">シフト提出</a>
-            <a class="px-1 link-success fw-bold" href="#">シフト</a>
+            <a class="px-1 link-success fw-bold" href="{% url 'create_shift' %}">シフト</a>
         </nav>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-sm btn-outline-success mx-1" data-bs-toggle="modal" data-bs-target="#modal">
+<button type="button" class="col-md-4 btn btn-sm btn-outline-success btn-center" data-bs-toggle="modal" data-bs-target="#modal_edit">
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
     <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z"/>
@@ -7,19 +7,19 @@
 </button>
 
 
-<div id="modal" class="modal fade" tabindex="-1">
+<div id="modal_edit" class="modal fade" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <input type="hidden" name="edit">
       </div>
       <div class="modal-body">
         <h4>編集を確定しますか？</h4>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
-        <button type="submit" class="btn btn-primary">はい</button>
+          <input type="hidden" name="edit">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+          <button type="submit" class="btn btn-primary">はい</button>
       </div>
     </div>
   </div>

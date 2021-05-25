@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
 from django.views.generic import TemplateView
+from django.contrib.auth.views import LoginView
 from staff.models import Staff
 from submitshifts.models import SubmitShift
 from datetime import datetime,time
@@ -7,6 +10,15 @@ from common import common
 import re
 
 # Create your views here.
+class Login(LoginView):
+    template_name = 'snipets/auth.html'
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
 class SubmitShifsView(TemplateView):
     template_name = 'shifts/shift_submit.html'
     def get(self, request):
@@ -22,15 +34,18 @@ class SubmitShifsView(TemplateView):
         days = common.getCalendarDays(year, month)
         
         staffs = Staff.objects.all()
+        request_shift = SubmitShift.objects.filter(year=year, month=month, staff_id=request.user)
         shifts = SubmitShift.objects.filter(year=year, month=month)
-        print(shifts)
-        context['year'] = year
-        context['month'] = month
-        context['this_month'] = dt_now.month
-        context['days'] = days
-        context['staffs'] = staffs
-        context['shifts'] = shifts
-        context['range'] = range(1, len(days)+1)
+        context = {
+            'year'          :year, 
+            'month'         :month, 
+            'this_month'    :dt_now.month, 
+            'days'          :days,
+            'staffs'        :staffs,
+            'request_shift' :request_shift,
+            'shifts'        :shifts,
+            'range'         :range(1, len(days)+1),
+        }
         return render(request, self.template_name, context)
     
     def post(self, request):
@@ -49,8 +64,8 @@ class SubmitShifsView(TemplateView):
                     if request_shift == 'x':
                         obj.absence_flg = True
                     elif request_shift != '':
-                        request_fromtime = time(int(request_shift[:request_shift.find('-')]))
-                        request_totime = time(int(request_shift[request_shift.find('-')+1:]))
+                        request_fromtime = int(request_shift[:request_shift.find('-')])
+                        request_totime = int(request_shift[request_shift.find('-')+1:])
                         obj.fromtime = request_fromtime
                         obj.totime = request_totime
                         obj.absence_flg = False
@@ -61,8 +76,8 @@ class SubmitShifsView(TemplateView):
                     if request_shift == 'x':
                         new_values['absence_flg'] = True
                     elif request_shift != '':
-                        request_fromtime = time(int(request_shift[:request_shift.find('-')]))
-                        request_totime = time(int(request_shift[request_shift.find('-')+1:]))
+                        request_fromtime = int(request_shift[:request_shift.find('-')])
+                        request_totime = int(request_shift[request_shift.find('-')+1:])
                         new_values['fromtime'] = request_fromtime
                         new_values['totime'] = request_totime
                         new_values['absence_flg'] = False

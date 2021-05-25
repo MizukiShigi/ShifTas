@@ -3,7 +3,7 @@ from submitshifts.models import SubmitShift
 
 # Create your models here.
 class ModifyShift(models.Model):
-    submit_id = models.ForeignKey(SubmitShift, on_delete=models.CASCADE)
+    submit_id = models.ForeignKey(SubmitShift, null=True, on_delete=models.CASCADE)
     position = models.CharField(max_length=10)
     modify_fromtime = models.IntegerField()
     modify_totime = models.IntegerField()

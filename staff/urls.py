@@ -1,5 +1,5 @@
 from django.urls import path, include
-from staff import views
+from . import views
 
 urlpatterns = [
     path('', views.StaffListView.as_view(), name='staff_list'),

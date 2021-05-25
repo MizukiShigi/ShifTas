@@ -1,0 +1,33 @@
+{% extends 'snipets/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-12">
+        <h3 class="font-italic text-success mx-2 my-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-file-ruled" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v4h10V2a1 1 0 0 0-1-1H4zm9 6H6v2h7V7zm0 3H6v2h7v-2zm0 3H6v2h6a1 1 0 0 0 1-1v-1zm-8 2v-2H3v1a1 1 0 0 0 1 1h1zm-2-3h2v-2H3v2zm0-3h2V7H3v2z"/>
+            </svg>
+            シフト
+        </h3>
+        <form method="POST">
+        {% csrf_token %}
+        <div class="nav d-flex justify-content-between">
+            <div class="nav d-flex flex-row">
+                <h5 class="text-secondary mx-2 mt-2">{{year}}年 {{month}}月</h5>
+            </div>
+            <div>
+                {% include 'shifts/shift_create.html' %}
+            </div>
+        </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table table-bordered ">
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

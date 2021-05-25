@@ -3,7 +3,6 @@
 {% block content %}
 
 <div class="container">
-    <form method="GET" class="d-inline">
     <div class="row">
         <div class="col-md-8">
             <div class="nav d-flex justify-content-between">
@@ -16,16 +15,16 @@
                     </h3>
                 </div>
                 <div class="nav d-flex flex-row">
-                {% if request.user.staff.shift_creater_flg %}
                     {% include 'staff/staff_delete.html'%}
-                    {% include 'staff/staff_edit.html'%}
-                {% endif %}
                 </div>
             </div>
-            {% include 'staff/staff_info.html'%}
+            <form method="POST" class="d-inline">
+                {% csrf_token %}
+                {% include 'staff/staff_info.html'%}
+                {% include 'staff/staff_edit.html'%}
+            </form>
         </div>
     </div>
-    </form>
 </div>
 
 {% endblock %}

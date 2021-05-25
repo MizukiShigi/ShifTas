@@ -2,5 +2,5 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.SubmitShifsView.as_view(), name='submit_shifts'),
+    path('', views.CreateShiftView.as_view(), name='create_shift'),
 ]

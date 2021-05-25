@@ -1,12 +1,10 @@
-<form method="POST" class="d-inline">
-    {% csrf_token %}
 <div class="table-responsive">
     <table class="table">
         
     <tbody>
     <tr>
         <th scope="col">名前</th>
-        <td>{{staff.name}}</td>
+        <td>{{staff.staff_name}}</td>
     </tr>
     <tr>
         <th scope="col">スタッフ番号</th>
@@ -16,7 +14,7 @@
         <th scope="col">カウンター</th>
         <td>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="counter"
+                <input class="form-check-input" type="checkbox" name="check" value="counter"
                 {% if staff.counter_flg %} checked {% endif %}
                 {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
             </div>
@@ -26,7 +24,7 @@
         <th scope="col">フライヤー</th>
         <td>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="flyer"  
+                <input class="form-check-input" type="checkbox" name="check" value="flyer"
                 {% if staff.flyer_flg %} checked {% endif %}
                 {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
             </div>
@@ -36,7 +34,7 @@
         <th scope="col">キッチン</th>
         <td>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="kitchen" 
+                <input class="form-check-input" type="checkbox" name="check" value="kitchen"
                 {% if staff.kitchen_flg %} checked {% endif %}
                 {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
             </div>
@@ -46,7 +44,7 @@
         <th scope="col">時間帯責任者</th>
         <td>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="resposible" 
+                <input class="form-check-input" type="checkbox" name="check" value="responsible"
                 {% if staff.responsible_flg %} checked {% endif %}
                 {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
             </div>
@@ -56,7 +54,7 @@
         <th scope="col">オープン</th>
         <td>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="opener" 
+                <input class="form-check-input" type="checkbox" name="check" value="opener"
                 {% if staff.opener_flg %} checked {% endif %}
                 {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
             </div>
@@ -66,7 +64,7 @@
         <th scope="col">新人</th>
         <td>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="rookie" 
+                <input class="form-check-input" type="checkbox" name="check" value="rookie"
                 {% if staff.rookie_flg %} checked {% endif %}
                 {% if not request.user.staff.shift_creater_flg %} disabled {% endif %}>
             </div>
@@ -75,5 +73,4 @@
     </tbody>
 </table>
 </div>
-</form>
 </div>

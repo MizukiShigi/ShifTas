@@ -1,0 +1,34 @@
+{% extends 'snipets/base_auth.html' %}
+
+{% block content %}
+<div class="container ">
+    <div class="row">
+        <div class="col-lg-3 m-auto ">
+            <h1 class="display-4 font-italic text-center "><a href="/" class="text-decoration-none text-success">ShifTas</a></h1>
+            </div>
+            <div class="col-lg-3 m-auto ">
+            
+            <form class="form-signin mx-4" method="POST">
+                {% csrf_token %}
+                <div class="text-center">
+                    <h1 class="h5 my-4 ">
+                        ログイン
+                    </h1>
+                </div>
+
+                <div class="form-label-group my-3">
+                    <input type="text"  name="username" 
+                    class="form-control" placeholder="username" required autofocus>
+                </div>
+
+                <div class="form-label-group my-3">
+                    <input type="password" id="id_password" name="password" class="form-control" placeholder="password" required>
+                </div>
+
+                <button class="btn btn-success btn-block my-3" type="submit">サインイン</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

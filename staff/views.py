@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .models import Staff
 
@@ -24,6 +24,44 @@ class StaffDetailView(TemplateView):
     def get(self, request, pk):
         staff = Staff.objects.get(pk=pk)
         self.context['staff'] = staff
-        print(self.context)
+        # print(self.context)
         return render(request, self.template_name, self.context)
+    def post(self, request, pk):
+        staff = Staff.objects.get(pk=pk)
+        print(staff)
+        print(request.POST)
+        # リファクタリング対象
+        if 'edit' in request.POST:
+            if 'responsible' in request.POST.getlist('check'):
+                staff.responsible_flg = True
+            else:
+                staff.responsible_flg = False
+            if 'counter' in request.POST.getlist('check'):
+                staff.counter_flg = True
+            else:
+                staff.counter_flg = False
+            if 'kitchen' in request.POST.getlist('check'):
+                print("kitchen")
+                staff.kitchen_flg = True
+            else:
+                staff.kitchen_flg = False
+            if 'flyer' in request.POST.getlist('check'):
+                staff.flyer_flg = True
+            else:
+                staff.flyer_flg = False
+            if 'opener' in request.POST.getlist('check'):
+                staff.opener_flg = True
+            else:
+                staff.opener_flg = False
+            if 'rookie' in request.POST.getlist('check'):
+                staff.rookie_flg = True
+            else:
+                staff.rookie_flg = False
+            staff.save()
+        elif request.POST == 'delete':
+            staff.delete()
+        return redirect('staff_list')
+
+            
+
     

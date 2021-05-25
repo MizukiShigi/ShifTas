@@ -78,12 +78,12 @@
                 type="button" id="{{day}}_link">
                 {{day}}
                 
-                {% for shift in shifts %}
+                {% for shift in request_shift %}
                     {% if shift.day == day %}
                       {% if shift.absence_flg %}
                         <div class="small request-shift" id="{{day}}">x</div>
                       {% else %}
-                        <div class="small request-shift" id="{{day}}">{{shift.fromtime | date:"G"}}-{{shift.totime | date:"G"}}</div>
+                        <div class="small request-shift" id="{{day}}">{{shift.fromtime}}-{{shift.totime}}</div>
                       {% endif %}
                     {% endif %}
                 {% endfor %}
