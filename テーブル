@@ -1,8 +1,9 @@
+初期構想策定
 DBはSQLite
 
 【User】
 
-【Staff】
+【Staff_info】
 ・user_id
 ・staff_no
 ・name
