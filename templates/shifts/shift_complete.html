@@ -3,22 +3,32 @@
 {% block content %}
 <style>
 .flyer_head {
-	background: #FFFFBB;
+	background: #CBFFD3;
+    color: #666666;
 }
 .flyer {
-	background: #FFFFCC;
-}
-.counter_head {
-	background: #CBFFD3;
-}
-.counter {
 	background: #E6FFE9;
 }
+.counter_head {
+	background: #FFDBC9;
+    color: #666666;
+}
+.counter {
+	background: #ffe9de;
+}
 .kitchen_head {
-	background: #FFC7AF;
+	background: #EDFFBE;
+    color: #666666;
 }
 .kitchen {
-	background: #FFDBC9;
+	background: #F3FFD8;
+}
+td {
+    text-align: center;
+    font-size: 10px;
+}
+th {
+    text-align: center;
 }
 </style>
 <div class="container">
@@ -42,36 +52,244 @@
             <table class="table table-bordered ">
             <thead>
                 <tr>
-                    <th class="text-center" scope="col" style="position: sticky; left: 0; background-color: #ffff;"></th>
+                    <th></th>
                     {% for day, value in days.items %}
                         <th scope="col" {% if value.holiday_flg == True or day == 28 %} class="text-danger" {% endif %}>
-                            {{month}}/{{day}} ({{value.day_of_week}})
+                            {{month}}/{{day}}<br>({{value.day_of_week}})
                         </th>
                     {% endfor %}
                 </tr>
             </thead>
             <tbody>
                 <tr class="flyer_head"><th rowspan="5">Flyer</th></tr>
-                <tr class="flyer"><td>a</td></tr>
-                <tr class="flyer"><td>a</td></tr>
-                <tr class="flyer"><td>a</td></tr>
-                <tr class="flyer"><td>a</td></tr>
-            
-                <tr class="counter_head"><th rowspan="9">counter</th></tr>
-                <tr class="counter"><td>a</td></tr>
-                <tr class="counter"><td>a</td></tr>
-                <tr class="counter"><td>a</td></tr>
-                <tr class="counter"><td>a</td></tr>
-                <tr class="counter"><td>a</td></tr>
-                <tr class="counter"><td>a</td></tr>
-                <tr class="counter"><td>a</td></tr>
-                <tr class="counter"><td>a</td></tr>
+                <tr class="flyer">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.flyer_shift.am_1 is not None %}
+                            {{s.flyer_shift.am_1.modify_fromtime}}:00~{{s.flyer_shift.am_1.modify_totime}}:00<br>
+                            {% if s.flyer_shift.am_1.submit_id.staff_id is not None %}
+                                {{s.flyer_shift.am_1.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="flyer">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.flyer_shift.am_2 is not None %}
+                            {{s.flyer_shift.am_2.modify_fromtime}}:00~{{s.flyer_shift.am_2.modify_totime}}:00<br>
+                            {% if s.flyer_shift.am_2.submit_id.staff_id is not None %}
+                                {{s.flyer_shift.am_2.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="flyer">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.flyer_shift.pm_1 is not None %}
+                            {{s.flyer_shift.pm_1.modify_fromtime}}:00~{{s.flyer_shift.pm_1.modify_totime}}:00<br>
+                            {% if s.flyer_shift.pm_1.submit_id.staff_id is not None %}
+                                {{s.flyer_shift.pm_1.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　 　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="flyer">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.flyer_shift.pm_2 is not None %}
+                            {{s.flyer_shift.pm_2.modify_fromtime}}:00~{{s.flyer_shift.pm_2.modify_totime}}:00<br>
+                            {% if s.flyer_shift.pm_2.submit_id.staff_id is not None %}
+                                {{s.flyer_shift.pm_2.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
 
-                <tr class="kitchen_head"><th rowspan="5">kitchen</th></tr>
-                <tr class="kitchen"><td>a</td></tr>
-                <tr class="kitchen"><td>a</td></tr>
-                <tr class="kitchen"><td>a</td></tr>
-                <tr class="kitchen"><td>a</td></tr>
+                <tr class="counter_head"><th rowspan="9">Counter</th></tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.am_1 is not None %}
+                            {{s.counter_shift.am_1.modify_fromtime}}:00~{{s.counter_shift.am_1.modify_totime}}:00<br>
+                            {% if s.counter_shift.am_1.submit_id.staff_id is not None %}
+                                {{s.counter_shift.am_1.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.am_2 is not None %}
+                            {{s.counter_shift.am_2.modify_fromtime}}:00~{{s.counter_shift.am_2.modify_totime}}:00<br>
+                            {% if s.counter_shift.am_2.submit_id.staff_id is not None %}
+                                {{s.counter_shift.am_2.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.am_3 is not None %}
+                            {{s.counter_shift.am_3.modify_fromtime}}:00~{{s.counter_shift.am_3.modify_totime}}:00<br>
+                            {% if s.counter_shift.am_3.submit_id.staff_id is not None %}
+                                {{s.counter_shift.am_3.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.am_4 is not None %}
+                            {{s.counter_shift.am_4.modify_fromtime}}:00~{{s.counter_shift.am_4.modify_totime}}:00<br>
+                            {% if s.counter_shift.am_4.submit_id.staff_id is not None %}
+                                {{s.counter_shift.am_4.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.am_5 is not None %}
+                            {{s.counter_shift.am_5.modify_fromtime}}:00~{{s.counter_shift.am_5.modify_totime}}:00<br>
+                            {% if s.counter_shift.am_5.submit_id.staff_id is not None %}
+                                {{s.counter_shift.am_5.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.pm_1 is not None %}
+                            {{s.counter_shift.pm_1.modify_fromtime}}:00~{{s.counter_shift.pm_1.modify_totime}}:00<br>
+                            {% if s.counter_shift.pm_1.submit_id.staff_id is not None %}
+                                {{s.counter_shift.pm_1.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.pm_2 is not None %}
+                            {{s.counter_shift.pm_2.modify_fromtime}}:00~{{s.counter_shift.pm_2.modify_totime}}:00<br>
+                            {% if s.counter_shift.pm_2.submit_id.staff_id is not None %}
+                                {{s.counter_shift.pm_2.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="counter">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.counter_shift.pm_3 is not None %}
+                            {{s.counter_shift.pm_3.modify_fromtime}}:00~{{s.counter_shift.pm_3.modify_totime}}:00<br>
+                            {% if s.counter_shift.pm_3.submit_id.staff_id is not None %}
+                                {{s.counter_shift.pm_3.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                
+                <tr class="kitchen_head"><th rowspan="5">Kitchen</th></tr>
+                <tr class="kitchen">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.kitchen_shift.am_1 is not None %}
+                            {{s.kitchen_shift.am_1.modify_fromtime}}:00~{{s.kitchen_shift.am_1.modify_totime}}:00<br>
+                            {% if s.kitchen_shift.am_1.submit_id.staff_id is not None %}
+                                {{s.kitchen_shift.am_1.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="kitchen">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.kitchen_shift.am_2 is not None %}
+                            {{s.kitchen_shift.am_2.modify_fromtime}}:00~{{s.kitchen_shift.am_2.modify_totime}}:00<br>
+                            {% if s.kitchen_shift.am_2.submit_id.staff_id is not None %}
+                                {{s.kitchen_shift.am_2.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="kitchen">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.kitchen_shift.pm_1 is not None %}
+                            {{s.kitchen_shift.pm_1.modify_fromtime}}:00~{{s.kitchen_shift.pm_1.modify_totime}}:00<br>
+                            {% if s.kitchen_shift.pm_1.submit_id.staff_id is not None %}
+                                {{s.kitchen_shift.pm_1.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr class="kitchen">
+                    {% for s in shift %}
+                        <td class="text-center">
+                        {% if s.kitchen_shift.pm_2 is not None %}
+                            {{s.kitchen_shift.pm_2.modify_fromtime}}:00~{{s.kitchen_shift.pm_2.modify_totime}}:00<br>
+                            {% if s.kitchen_shift.pm_2.submit_id.staff_id is not None %}
+                                {{s.kitchen_shift.pm_2.submit_id.staff_id.staff_name}}
+                            {% else %}
+                                (　　)
+                            {% endif %}
+                        {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
             </tbody>
             </table>
         </div>

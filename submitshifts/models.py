@@ -4,7 +4,7 @@ from staff.models import Staff
 
 # Create your models here.
 class SubmitShift(models.Model):
-    staff_id = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    staff_id = models.ForeignKey(Staff, on_delete=models.CASCADE)
     year = models.IntegerField()
     month = models.IntegerField()
     day = models.IntegerField()

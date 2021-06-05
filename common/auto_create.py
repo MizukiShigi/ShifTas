@@ -21,8 +21,10 @@ def auto_create():
         CompleteShift.objects.all().delete()
     # 1日ずつ作成する
     for day, value in days.items():
-        if value['holiday_flg'] == True or day == 28: holiday = True
-        else: holiday = False
+        if value['holiday_flg'] == True or day == 28: 
+            holiday = True
+        else: 
+            holiday = False
         day_shift_data = create_position_shift(day, holiday)
 
 def create_position_shift(day, is_holiday):
@@ -30,29 +32,29 @@ def create_position_shift(day, is_holiday):
     global month
     # フライヤーポジションのスタッフを取得
     get_flyer_shifts = SubmitShift.objects.filter(year=year, month=month, day=day, absence_flg=False)
-    get_open_shifts = get_flyer_shifts.filter(staff_id__staff__responsible_flg=True, staff_id__staff__opener_flg=True).values('id','staff_id_id','fromtime','totime')
-    get_close_shifts = get_flyer_shifts.filter(staff_id__staff__responsible_flg=True).values('id','staff_id_id','fromtime','totime')
+    get_open_shifts = get_flyer_shifts.filter(staff_id__responsible_flg=True, staff_id__opener_flg=True).values('id','staff_id_id','fromtime','totime')
+    get_close_shifts = get_flyer_shifts.filter(staff_id__responsible_flg=True).values('id','staff_id_id','fromtime','totime')
     flyer_shifts = create_flyer_shift(get_open_shifts, get_close_shifts)
     flyer_id = save_shift('flyer', flyer_shifts) 
     
     # カウンターポジションのスタッフを取得
     get_counter_shifts = list(
                             SubmitShift.objects\
-                            .filter(year=year, month=month, day=day, absence_flg=False, staff_id__staff__counter_flg=True)\
+                            .filter(year=year, month=month, day=day, absence_flg=False, staff_id__counter_flg=True)\
                             .exclude(pk__in=ModifyShift.objects.filter(submit_id__year=year, submit_id__month=month, submit_id__day=day).values_list('submit_id'))\
                             .values('id','staff_id_id','fromtime','totime')
                             )
-    counter_shifts = create_counter_shift(get_counter_shifts)
+    counter_shifts = create_counter_shift(get_counter_shifts, is_holiday)
     counter_id = save_shift('counter', counter_shifts)
     
     # キッチンポジションのスタッフを取得
     get_kitchen_shifts = list(
                             SubmitShift.objects\
-                            .filter(year=year, month=month, day=day, absence_flg=False, staff_id__staff__kitchen_flg=True)\
+                            .filter(year=year, month=month, day=day, absence_flg=False, staff_id__kitchen_flg=True)\
                             .exclude(pk__in=ModifyShift.objects.filter(submit_id__year=year, submit_id__month=month, submit_id__day=day).values('submit_id'))\
                             .values('id','staff_id_id','fromtime','totime')
                             )
-    kitchen_shifts = create_kitchen_shift(get_kitchen_shifts)
+    kitchen_shifts = create_kitchen_shift(get_kitchen_shifts, is_holiday)
     kitchen_id = save_shift('kitchen', kitchen_shifts)
 
     complete_shift = CompleteShift(year=year, month=month, day=day, is_holiday=is_holiday, flyer_shift=flyer_id, counter_shift=counter_id, kitchen_shift=kitchen_id)
@@ -87,7 +89,7 @@ def create_flyer_shift(open_shifts, close_shifts):
     print(selected_flyer)
     return selected_flyer
 
-def create_counter_shift(counter_shifts):
+def create_counter_shift(counter_shifts, holiday):
     #-------------変数初期化------------#
     delimiter_time = ['am_1','am_2','am_3','am_4','am_5', 'pm_1','pm_2','pm_3','pm_4', 'pm_5', 'pm_6']
     selected_counter = {
@@ -135,11 +137,16 @@ def create_counter_shift(counter_shifts):
     baton_am3_pm3 = selected_counter['am_3']['totime']
 
     # am4のスタッフをランダム抽出
-    tmp_list = [am5_candidates]
-    am_4 = create_am_shift('am_4', 12, 17, selected_counter, am4_candidates, tmp_list=tmp_list)
-    
+    if holiday:
+        tmp_list = [am5_candidates]
+        am_4 = create_am_shift('am_4', 12, 17, selected_counter, am4_candidates, tmp_list=tmp_list)
+    else:
+        am_4 = None
     # am5のスタッフをランダム抽出
-    am_5 = create_am_shift('am_5', 12, 17, selected_counter, am5_candidates)
+    if holiday:
+        am_5 = create_am_shift('am_5', 12, 17, selected_counter, am5_candidates)
+    else:
+        am_5 = None
     
     # pmの候補者を選定
     for counter in counter_shifts:
@@ -161,7 +168,7 @@ def create_counter_shift(counter_shifts):
     print(selected_counter)
     return selected_counter
 
-def create_kitchen_shift(kitchen_shifts):
+def create_kitchen_shift(kitchen_shifts, holiday):
     #-------------変数初期化------------#
     delimiter_time = ['am_1','am_2','pm_1','pm_2']
     selected_kitchen = {
@@ -189,7 +196,10 @@ def create_kitchen_shift(kitchen_shifts):
     baton_am1_pm1 = selected_kitchen['am_1']['totime']
 
     # am2のスタッフをランダム抽出
-    am_2 = create_am_shift('am_2', 12, 17, selected_kitchen, am2_candidates)
+    if holiday:
+        am_2 = create_am_shift('am_2', 12, 17, selected_kitchen, am2_candidates)
+    else:
+        am_2 = None
     baton_am2_pm2 = 17
     
     # pmの候補者を選定

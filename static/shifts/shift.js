@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded',function(){
         }
         else{
             if(validateTime(setFrom, setTo)){
-               return `${setFrom}-${setTo}`;
+                return `${setFrom}-${setTo}`;
             }
             else{
                 alert(`${forcas_day}日${setFrom}-${setTo}

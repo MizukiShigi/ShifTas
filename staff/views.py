@@ -28,9 +28,6 @@ class StaffDetailView(TemplateView):
         return render(request, self.template_name, self.context)
     def post(self, request, pk):
         staff = Staff.objects.get(pk=pk)
-        print(staff)
-        print(request.POST)
-        # リファクタリング対象
         if 'edit' in request.POST:
             if 'responsible' in request.POST.getlist('check'):
                 staff.responsible_flg = True
@@ -41,7 +38,6 @@ class StaffDetailView(TemplateView):
             else:
                 staff.counter_flg = False
             if 'kitchen' in request.POST.getlist('check'):
-                print("kitchen")
                 staff.kitchen_flg = True
             else:
                 staff.kitchen_flg = False

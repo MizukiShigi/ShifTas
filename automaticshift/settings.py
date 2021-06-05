@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'menu',
+    'home',
     'staff',
     'submitshifts',
     'createshifts',
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'global_login_required.GlobalLoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'automaticshift.urls'
@@ -142,13 +143,18 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'rounded-0 alert alert-success',
     messages.INFO: 'rounded-0 alert alert-info',
     messages.DEBUG: 'rounded-0 alert alert-secondary',
- }
+}
 # --------- massage tab with bootstrap alert class ---------------------
 
 LOGIN_URL = '/login/'
 
-LOGIN_REDIRECT_URL = '/submit/'
+LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_URL = '/logout/'
 
 LOGOUT_REDIRECT_URL = '/login/'
+
+PUBLIC_PATHS = [
+	'/login/',  
+    '/guest_login/',
+]

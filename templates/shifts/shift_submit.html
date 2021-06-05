@@ -55,7 +55,7 @@
                         {% for i in range %}
                             {% for shift in shifts %}
                             
-                                {% if staff.staff == shift.staff_id and shift.day == i %}
+                                {% if staff == shift.staff_id and shift.day == i %}
                                     <td class="text-center" style="font-size: 10px;">{% if shift.absence_flg %} x {% else %}{{shift.fromtime}}-{{shift.totime}}{% endif %}</td>
                                 {% endif %}
                             

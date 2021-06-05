@@ -4,19 +4,19 @@
 <div class="container ">
     <div class="row">
         <div class="col-lg-3 m-auto ">
-            <h1 class="display-4 font-italic text-center "><a href="/" class="text-decoration-none text-success">ShifTas</a></h1>
+            <h1 class="display-5 font-italic text-center"><a href="/" class="text-decoration-none text-success">ShifTas</a></h1>
             </div>
             <div class="col-lg-3 m-auto ">
             
             <form class="form-signin mx-4" method="POST">
                 {% csrf_token %}
-                <div class="text-center">
+                <div class="text-center text-secondary">
                     <h1 class="h5 my-4 ">
                         ログイン
                     </h1>
                 </div>
 
-                <div class="form-label-group my-3">
+                <div class="form-label-group my-3 ">
                     <input type="text"  name="username" 
                     class="form-control" placeholder="username" required autofocus>
                 </div>
@@ -26,6 +26,7 @@
                 </div>
 
                 <button class="btn btn-success btn-block my-3" type="submit">サインイン</button>
+                <a href="{% url 'guest_login' %}" class="btn btn-success btn-block my-3">ゲストとしてログイン</a>
 
             </form>
         </div>
