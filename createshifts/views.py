@@ -1,14 +1,9 @@
-import staff
 from django.shortcuts import render, redirect
-from datetime import datetime, time
 from django.views.generic import TemplateView
-from submitshifts.models import SubmitShift
-from .models import ModifyShift, CounterShift, FlyerShift, KitchenShift, CompleteShift 
+from .models import  CompleteShift 
 from django.contrib.auth.models import User
 from staff.models import Staff
-from common import common, auto_create
-from django.contrib.auth import get_user_model
-import random
+from common import auto_create
 
 # Create your views here.
 

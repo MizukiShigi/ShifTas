@@ -50,8 +50,7 @@ class SubmitShifsView(TemplateView):
             if 'request' in req:
                 submit_day = req.strip('_request')
                 request_shift = request.POST.get(req)
-                post = {}
-
+                
                 # 更新処理
                 try:
                     obj = SubmitShift.objects.get(staff_id=staff_id, year=submit_year, month=submit_month, day=submit_day)
@@ -63,6 +62,7 @@ class SubmitShifsView(TemplateView):
                         obj.fromtime = request_fromtime
                         obj.totime = request_totime
                         obj.absence_flg = False
+                
                 # 追加処理
                 except SubmitShift.DoesNotExist:
                     new_values = {'staff_id':staff_id, 'year':submit_year, 'month':submit_month, 'day':submit_day}
