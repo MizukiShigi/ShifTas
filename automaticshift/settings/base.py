@@ -151,6 +151,7 @@ LOGOUT_URL = '/logout/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 PUBLIC_PATHS = [
+    '/admin/',
 	'/login/',  
     '/guest_login/',
 ]
