@@ -62,7 +62,7 @@ class SubmitShifsView(TemplateView):
                         obj.fromtime = request_fromtime
                         obj.totime = request_totime
                         obj.absence_flg = False
-                
+                    obj.save()
                 # 追加処理
                 except SubmitShift.DoesNotExist:
                     new_values = {'staff_id':staff_id, 'year':submit_year, 'month':submit_month, 'day':submit_day}
@@ -75,5 +75,5 @@ class SubmitShifsView(TemplateView):
                         new_values['totime'] = request_totime
                         new_values['absence_flg'] = False
                         obj = SubmitShift(**new_values)
-                obj.save()
+                        obj.save()
         return redirect('submit_shifts')
