@@ -13,6 +13,7 @@ class SubmitShifsView(TemplateView):
     def get(self, request):
         
         context = {}
+        shifts = []
         dt_now = datetime.now()
         year = dt_now.year
 
@@ -28,7 +29,10 @@ class SubmitShifsView(TemplateView):
         staff_id = Staff.objects.get(staff=request.user)
         request_shift = SubmitShift.objects.filter(year=year, month=month, staff_id=staff_id)
         
-        shifts = SubmitShift.objects.filter(year=year, month=month)
+        for staff in staffs:
+            target_shifts = SubmitShift.objects.filter(year=year, month=month, staff_id=staff).order_by('day')
+            shifts.append({'name':staff.staff_name, 'shifts':target_shifts})
+        print(shifts)
         context = {
             'year'          :year, 
             'month'         :month, 
@@ -36,7 +40,7 @@ class SubmitShifsView(TemplateView):
             'days'          :days,
             'staffs'        :staffs,
             'request_shift' :request_shift,
-            'shifts'        :shifts,
+            'shifts_list'   :shifts,
             'range'         :range(1, len(days)+1),
         }
         return render(request, self.template_name, context)
