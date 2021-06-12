@@ -23,7 +23,9 @@ class StaffDetailView(TemplateView):
     context = {'staff':None}
     def get(self, request, pk):
         staff = Staff.objects.get(pk=pk)
+        status = Staff.objects.get(staff_id=request.user)
         self.context['staff'] = staff
+        self.context['status'] = status
         return render(request, self.template_name, self.context)
     def post(self, request, pk):
         staff = Staff.objects.get(pk=pk)
