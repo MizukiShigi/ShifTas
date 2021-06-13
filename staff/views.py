@@ -10,7 +10,7 @@ class StaffListView(TemplateView):
     def get(self, request):
         if 'search' in request.GET:
             search_name = request.GET.get('search')
-            staffs = Staff.objects.filter(name__icontains=search_name)
+            staffs = Staff.objects.filter(staff_name__icontains=search_name)
             self.context['search'] = search_name
         else:
             staffs = Staff.objects.all()
