@@ -76,7 +76,7 @@
                 <a class="day text-decoration-none 
                 {% if value.holiday_flg == True or day == 28 %} text-danger {% else %} text-dark {% endif %}" 
                  id="{{day}}_link">
-                <div>{{day}}</div>
+                {{day}}
                 
                 {% for shift in request_shift %}
                     {% if shift.day == day %}
