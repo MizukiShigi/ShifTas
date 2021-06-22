@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
+from openpyxl.descriptors.base import Length
 from .models import  CompleteShift 
 from django.contrib.auth.models import User
 from staff.models import Staff
@@ -41,74 +42,76 @@ def export(request, year, month):
         if values['holiday_flg'] or day == 28:
             ws.cell(row=y, column=x).font = openpyxl.styles.fonts.Font(color='FF0000')
         y = y + 1
-        shifts = CompleteShift.objects.filter(year=year, month=month, day=day)[0]
-        if shifts.flyer_shift.am_1 is not None:
-            fly_am1 = shifts.flyer_shift.am_1
-            write_excel(ws, y, x, fly_am1)
-        y = y + 2 
-        if shifts.flyer_shift.am_2 is not None:
-            fly_am2 = shifts.flyer_shift.am_2
-            write_excel(ws, y, x, fly_am2)
-        y = y + 2  
-        if shifts.flyer_shift.pm_1 is not None:
-            fly_pm1 = shifts.flyer_shift.pm_1
-            write_excel(ws, y, x, fly_pm1)
-        y = y + 2
-        if shifts.flyer_shift.pm_2 is not None:
-            fly_pm2 = shifts.flyer_shift.pm_2
-            write_excel(ws, y, x, fly_pm2)
-        y = y + 3
-        if shifts.counter_shift.am_1 is not None:
-            counter_am1 = shifts.counter_shift.am_1
-            write_excel(ws, y, x, counter_am1)
-        y = y + 2
-        if shifts.counter_shift.am_2 is not None:
-            counter_am2 = shifts.counter_shift.am_2
-            write_excel(ws, y, x, counter_am2)
-        y = y + 2 
-        if shifts.counter_shift.am_3 is not None:
-            counter_am3 = shifts.counter_shift.am_3
-            write_excel(ws, y, x, counter_am3)
-        y = y + 2    
-        if shifts.counter_shift.am_4 is not None:
-            counter_am4 = shifts.counter_shift.am_4
-            write_excel(ws, y, x, counter_am4)
-        y = y + 2
-        if shifts.counter_shift.am_5 is not None:
-            counter_am5 = shifts.counter_shift.am_5
-            write_excel(ws, y, x, counter_am5)
-        y = y + 2 
-        if shifts.counter_shift.pm_1 is not None:
-            counter_pm1 = shifts.counter_shift.pm_1
-            write_excel(ws, y, x, counter_pm1)
-        y = y + 2 
-        if shifts.counter_shift.pm_2 is not None:
-            counter_pm2 = shifts.counter_shift.pm_2
-            write_excel(ws, y, x, counter_pm2)
-        y = y + 2
-        if shifts.counter_shift.pm_3 is not None:
-            counter_pm3 = shifts.counter_shift.pm_3
-            write_excel(ws, y, x, counter_pm3)
-        y = y + 3
-        if shifts.kitchen_shift.am_1 is not None:
-            kit_am1 = shifts.kitchen_shift.am_1
-            write_excel(ws, y, x, kit_am1)
-        y = y + 2 
-        if shifts.kitchen_shift.am_2 is not None:
-            kit_am2 = shifts.kitchen_shift.am_2
-            write_excel(ws, y, x, kit_am2)
-        y = y + 2  
-        if shifts.kitchen_shift.pm_1 is not None:
-            kit_pm1 = shifts.kitchen_shift.pm_1
-            write_excel(ws, y, x, kit_pm1)
-        y = y + 2 
-        if shifts.kitchen_shift.pm_2 is not None:
-            kit_pm2 = shifts.kitchen_shift.pm_2
-            write_excel(ws, y, x, kit_pm2)
+        get_shifts = CompleteShift.objects.filter(year=year, month=month, day=day)
+        if len(get_shifts) > 0:
+            shifts = get_shifts[0]
+            if shifts.flyer_shift.am_1 is not None:
+                fly_am1 = shifts.flyer_shift.am_1
+                write_excel(ws, y, x, fly_am1)
+            y = y + 2 
+            if shifts.flyer_shift.am_2 is not None:
+                fly_am2 = shifts.flyer_shift.am_2
+                write_excel(ws, y, x, fly_am2)
+            y = y + 2  
+            if shifts.flyer_shift.pm_1 is not None:
+                fly_pm1 = shifts.flyer_shift.pm_1
+                write_excel(ws, y, x, fly_pm1)
+            y = y + 2
+            if shifts.flyer_shift.pm_2 is not None:
+                fly_pm2 = shifts.flyer_shift.pm_2
+                write_excel(ws, y, x, fly_pm2)
+            y = y + 3
+            if shifts.counter_shift.am_1 is not None:
+                counter_am1 = shifts.counter_shift.am_1
+                write_excel(ws, y, x, counter_am1)
+            y = y + 2
+            if shifts.counter_shift.am_2 is not None:
+                counter_am2 = shifts.counter_shift.am_2
+                write_excel(ws, y, x, counter_am2)
+            y = y + 2 
+            if shifts.counter_shift.am_3 is not None:
+                counter_am3 = shifts.counter_shift.am_3
+                write_excel(ws, y, x, counter_am3)
+            y = y + 2    
+            if shifts.counter_shift.am_4 is not None:
+                counter_am4 = shifts.counter_shift.am_4
+                write_excel(ws, y, x, counter_am4)
+            y = y + 2
+            if shifts.counter_shift.am_5 is not None:
+                counter_am5 = shifts.counter_shift.am_5
+                write_excel(ws, y, x, counter_am5)
+            y = y + 2 
+            if shifts.counter_shift.pm_1 is not None:
+                counter_pm1 = shifts.counter_shift.pm_1
+                write_excel(ws, y, x, counter_pm1)
+            y = y + 2 
+            if shifts.counter_shift.pm_2 is not None:
+                counter_pm2 = shifts.counter_shift.pm_2
+                write_excel(ws, y, x, counter_pm2)
+            y = y + 2
+            if shifts.counter_shift.pm_3 is not None:
+                counter_pm3 = shifts.counter_shift.pm_3
+                write_excel(ws, y, x, counter_pm3)
+            y = y + 3
+            if shifts.kitchen_shift.am_1 is not None:
+                kit_am1 = shifts.kitchen_shift.am_1
+                write_excel(ws, y, x, kit_am1)
+            y = y + 2 
+            if shifts.kitchen_shift.am_2 is not None:
+                kit_am2 = shifts.kitchen_shift.am_2
+                write_excel(ws, y, x, kit_am2)
+            y = y + 2  
+            if shifts.kitchen_shift.pm_1 is not None:
+                kit_pm1 = shifts.kitchen_shift.pm_1
+                write_excel(ws, y, x, kit_pm1)
+            y = y + 2 
+            if shifts.kitchen_shift.pm_2 is not None:
+                kit_pm2 = shifts.kitchen_shift.pm_2
+                write_excel(ws, y, x, kit_pm2)
         x = x + 1 
     wb.save(output)
     response = HttpResponse(output.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=submitted_shift.xlsx'
+    response['Content-Disposition'] = 'attachment; filename=created_shift.xlsx'
     return response
 
 
