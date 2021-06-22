@@ -6,7 +6,9 @@ from staff.models import Staff
 from submitshifts.models import SubmitShift
 from datetime import datetime,time
 from common import common
-import re
+import io
+import openpyxl
+from django.http import HttpResponse
 
 class SubmitShifsView(TemplateView):
     template_name = 'shifts/shift_submit.html'
@@ -33,11 +35,13 @@ class SubmitShifsView(TemplateView):
             target_shifts = SubmitShift.objects.filter(year=year, month=month, staff_id=staff).order_by('day')
             shifts.append({'name':staff.staff_name, 'shifts':target_shifts})
         print(shifts)
+        status = staff_id
         context = {
             'year'          :year, 
             'month'         :month, 
             'this_month'    :dt_now.month, 
             'days'          :days,
+            'status'        :status,
             'staffs'        :staffs,
             'request_shift' :request_shift,
             'shifts_list'   :shifts,
@@ -82,3 +86,42 @@ class SubmitShifsView(TemplateView):
                     obj = SubmitShift(**new_values)
                     obj.save()
         return redirect('submit_shifts')
+    
+def export(request, year, month):
+    days = common.getCalendarDays(year, month)
+    output = io.BytesIO()
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = str(year) + '年' + str(month) + '月'
+    # 指定の年月の提出されたシフトデータを全て取得
+    submited_shifts = {}
+    staffs = Staff.objects.all()
+    for staff in staffs:
+        target_shifts = SubmitShift.objects.filter(year=year, month=month, staff_id=staff).order_by('day')
+        submited_shifts[staff.staff_name] = target_shifts
+
+    # 書き込み処理
+    # 日付
+    x = 2
+    y = 1
+    for day, values in days.items():
+        ws.cell(row=y, column=x).value = str(month) + '/' + str(day) + '(' + values['day_of_week'] + ')'
+        if values['holiday_flg'] or day == 28:
+            ws.cell(row=y, column=x).font = openpyxl.styles.fonts.Font(color='FF0000')
+        x = x + 1
+    # シフト
+    y = 2
+    for name, shifts in submited_shifts.items():
+        x = 1
+        ws.cell(row=y, column=x).value = name
+        ws.cell(row=y, column=x).alignment = openpyxl.styles.Alignment(horizontal="centerContinuous")
+        x = x + 1
+        for shift in shifts:
+            ws.cell(row=y, column=x).value = 'x' if shift.absence_flg else str(shift.fromtime) + '~' + str(shift.totime)
+            ws.cell(row=y, column=x).alignment = openpyxl.styles.Alignment(horizontal="centerContinuous")
+            x = x + 1
+        y = y + 1  
+    wb.save(output)
+    response = HttpResponse(output.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=submitted_shift.xlsx'
+    return response

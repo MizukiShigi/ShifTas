@@ -15,14 +15,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <h4>本当に削除しますか？</h4>
+          <h5>本当に削除しますか？</h5>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
           <form method="POST" class="d-inline">
             {% csrf_token %}
           <input type="hidden" name="delete">
-          <button type="submit" class="btn btn-primary">削除</button>
+          <button type="submit" class="btn btn-danger">削除</button>
         </form>
         </div>
       </div>
