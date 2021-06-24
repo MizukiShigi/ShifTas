@@ -24,7 +24,7 @@ class SubmitShifsView(TemplateView):
             month_str = request.GET.get('month')
             month = int(month_str)
         else:
-            month = dt_now.month
+            month = dt_now.month + 1
         days = common.getCalendarDays(year, month)
         
         staffs = Staff.objects.all()

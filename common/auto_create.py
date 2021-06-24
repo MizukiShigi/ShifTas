@@ -8,7 +8,7 @@ import random
 # グローバル変数
 dt_now = datetime.now()
 year = dt_now.year
-month = dt_now.month
+month = dt_now.month + 1
 days = common.getCalendarDays(year, month)
 
 # シフト自動作成
