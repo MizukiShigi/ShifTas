@@ -7,9 +7,6 @@ function time(){
     var month = now.getMonth()+1
     // 来月
     var nextMonth = now.getMonth()+2
-    // 曜日
-    var dayOfWeek = now.getDate()
-    var dayOfWeekStr = [ "月", "火", "水", "木", "金", "土", "日" ][dayOfWeek]
     // 秒数差
     var diff = (firstDay.getTime() - now.getTime()) / 1000;
     // 日時の計算と端数切り捨て
@@ -20,12 +17,13 @@ function time(){
     // 二桁表示
     minitesLeft = ("0" + minitesLeft).slice(-2)
     secondsLeft = ("0" + secondsLeft).slice(-2)
-    if (now.getDay() <= 23){
+    console.log(now.getDate())
+    if (now.getDate() <= 23){
         // 出力
         document.getElementById("days").innerHTML = (nextMonth + "月のシフト提出期限まで" + "<br />" + daysLeft + "日" + hoursLeft + "時間" + minitesLeft + "分" + secondsLeft + "秒");
     }
     else{
-        document.getElementById("days").innerHTML = ("シフト作成期間です");
+        document.getElementById("days").innerHTML = (nextMonth +"月のシフト作成期間です");
     }
 }
 setInterval('time()',500);
