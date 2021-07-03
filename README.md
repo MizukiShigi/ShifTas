@@ -13,7 +13,7 @@ ShifTas シフト提出、作成をサポートする
 # 特徴
 シフトのオンライン提出、自動作成
  
-# Requirement
+# 技術
 * Python 3.9
 * Django 3.2
 
