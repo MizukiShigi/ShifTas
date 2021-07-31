@@ -1,4 +1,4 @@
-#URL
+# URL
 http://www.shiftas.net/
 => ゲストとしてログインすることで誰でもログインできます
 
