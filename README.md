@@ -13,13 +13,16 @@ ShifTas シフト提出、作成をサポートする
 
 これらを解決、サポートできるようなアプリを作成した
 
-
 # 特徴
 シフトのオンライン提出、自動作成
  
 # 技術
-* Python 3.9
-* Django 3.2
+* Python 
+* Django 
+* JavaScript
+* SQLite
+* AWS(EC2)
+* Docker
 
  
 # 作成者 
