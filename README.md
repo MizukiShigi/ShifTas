@@ -21,12 +21,5 @@ ShifTas シフト提出、作成をサポートする
 * Django 
 * JavaScript
 * SQLite
-* AWS(EC2)
-* Docker
-
- 
-# 作成者 
-* 鴫原瑞貴
-* 会社員
-* shifi1204@icloud.com
+* AWS
  
